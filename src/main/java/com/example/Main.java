@@ -92,13 +92,15 @@ public class Main
 
         GraphDOT.write(res, TestDriver.SIGMA, System.out);
             
-
-        System.out.println(res.accepts(toCharacterArray("aaa")));
-        System.out.println(res.accepts(toCharacterArray("aabb")));
-        System.out.println(res.accepts(toCharacterArray("bbb")));
+        System.out.println("FAILED TEST:");
+        System.out.println(res.accepts(toCharacterArray("aa")));
+        System.out.println(res.accepts(toCharacterArray("abbb")));
+        System.out.println(res.accepts(toCharacterArray("baa")));
         System.out.println(res.accepts(toCharacterArray("")));
-        System.out.println(res.accepts(toCharacterArray("bbbaa")));
-        System.out.println(res.accepts(toCharacterArray("aabaa")));
+        System.out.println(res.accepts(toCharacterArray("abbbba")));
+
+        System.out.println("SUCCESS TEST:");
+        System.out.println(res.accepts(toCharacterArray("abba")));
 
             
         System.out.println("*************************************************************");
