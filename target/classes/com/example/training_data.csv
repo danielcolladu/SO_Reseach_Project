@@ -3,3 +3,9 @@ false,false,false,false,B
 true,false,false,false,A
 true,true,false,false,A
 true,true,true,false,B
+false,false,false,false,A
+true,false,false,false,B
+true,true,false,false,B
+true,true,true,false,A
+true,true,true,true,A
+true,true,true,true,B

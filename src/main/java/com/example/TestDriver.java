@@ -2,6 +2,8 @@ package com.example;
 
 import net.automatalib.words.Alphabet;
 import net.automatalib.words.impl.GrowingMapAlphabet;
+import weka.classifiers.Evaluation;
+import weka.classifiers.functions.MultilayerPerceptron;
 import weka.classifiers.trees.J48;
 import weka.core.DenseInstance;
 import weka.core.Instance;
@@ -9,13 +11,13 @@ import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
 public class TestDriver {
-    private J48 tree;
-    private Instances trainingData;
+    
 
     private boolean breadHeated = false;
     private boolean butterSpread = false;
     private boolean jamAdded = false;
     private boolean served = false;
+
     
     // input symbols
     private static final Character A = 'a';
@@ -30,33 +32,27 @@ public class TestDriver {
     }
 
     public TestDriver() throws Exception {
-        // Load training data
-        DataSource source = new DataSource("/path/to/training_data.csv");
-        trainingData = source.getDataSet();
-
-        // Set the class index (the last attribute)
-        if (trainingData.classIndex() == -1)
-            trainingData.setClassIndex(trainingData.numAttributes() - 1);
-
-        // Train the model
-        tree = new J48();
-        tree.buildClassifier(trainingData);
+        
     }
 
     public boolean executeSymbol(Character s) throws Exception {
+        Oracle or = new Oracle();
         // Create an instance for the current state
-        double[] vals = new double[trainingData.numAttributes()];
+        double[] vals = new double[or.trainingData.numAttributes()];
         vals[0] = breadHeated ? 1.0 : 0.0;
         vals[1] = butterSpread ? 1.0 : 0.0;
         vals[2] = jamAdded ? 1.0 : 0.0;
         vals[3] = served ? 1.0 : 0.0;
 
         Instance instance = new DenseInstance(1.0, vals);
-        instance.setDataset(trainingData);
+        instance.setDataset(or.trainingData);
 
-        // Predict the next step
-        double predictedClass = tree.classifyInstance(instance);
-        String nextStep = trainingData.classAttribute().value((int) predictedClass);
+        // Predict the next step using the neural network
+        double[] prediction = or.neuralNetwork.distributionForInstance(instance);
+        int predictedClass = (int) Math.round(prediction[0]); // Assuming binary classification
+
+        // Convert predicted class to corresponding next step (e.g., "A" or "B")
+        String nextStep = or.trainingData.classAttribute().value(predictedClass);
 
         // Compare predicted next step with the provided symbol and update state if it matches
         if (nextStep.equals(s.toString())) {
