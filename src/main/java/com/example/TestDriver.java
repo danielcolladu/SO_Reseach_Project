@@ -16,10 +16,10 @@ public class TestDriver {
     private boolean butterSpread = false;
     private boolean jamAdded = false;
     private boolean served = false;
+    
     // input symbols
     private static final Character A = 'a';
     private static final Character B = 'b';
-
 
     // input alphabet used by learning algorithm
     public static final Alphabet<Character> SIGMA = new GrowingMapAlphabet<>();
@@ -29,11 +29,8 @@ public class TestDriver {
         SIGMA.add(B);
     }
 
-
     public TestDriver() throws Exception {
         // Load training data
-
-
         DataSource source = new DataSource("/path/to/training_data.csv");
         trainingData = source.getDataSet();
 
@@ -61,19 +58,23 @@ public class TestDriver {
         double predictedClass = tree.classifyInstance(instance);
         String nextStep = trainingData.classAttribute().value((int) predictedClass);
 
-        // Update the state based on the symbol
-        if (!breadHeated && s.equals('B') && nextStep.equals("B")) {
-            breadHeated = true;
-        } else if (breadHeated && !butterSpread && s.equals('A') && nextStep.equals("A")) {
-            butterSpread = true;
-        } else if (breadHeated && butterSpread && !jamAdded && s.equals('A') && nextStep.equals("A")) {
-            jamAdded = true;
-        } else if (breadHeated && butterSpread && jamAdded && !served && s.equals('B') && nextStep.equals("B")) {
-            served = true;
+        // Compare predicted next step with the provided symbol and update state if it matches
+        if (nextStep.equals(s.toString())) {
+            if (!breadHeated && s.equals(B)) {
+                breadHeated = true;
+            } else if (breadHeated && !butterSpread && s.equals(A)) {
+                butterSpread = true;
+            } else if (breadHeated && butterSpread && !jamAdded && s.equals(A)) {
+                jamAdded = true;
+            } else if (breadHeated && butterSpread && jamAdded && !served && s.equals(B)) {
+                served = true;
+            } else {
+                return false; // Invalid state transition
+            }
+            return true; // Valid state transition
         } else {
-            return false; // Invalid symbol for the current state
+            return false; // Prediction does not match the provided symbol
         }
-        return true;
     }
 
     public void reset() {
