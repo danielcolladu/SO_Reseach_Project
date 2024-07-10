@@ -13,12 +13,6 @@ import weka.core.converters.ConverterUtils.DataSource;
 public class TestDriver {
     
 
-    private boolean breadHeated = false;
-    private boolean butterSpread = false;
-    private boolean jamAdded = false;
-    private boolean served = false;
-
-    
     // input symbols
     private static final Character A = 'a';
     private static final Character B = 'b';
@@ -36,25 +30,22 @@ public class TestDriver {
     }
 
     public boolean executeSymbol(Character s) throws Exception {
-        Oracle or = new Oracle();
-        // Create an instance for the current state
-        double[] vals = new double[or.trainingData.numAttributes()];
-        vals[0] = breadHeated ? 1.0 : 0.0;
-        vals[1] = butterSpread ? 1.0 : 0.0;
-        vals[2] = jamAdded ? 1.0 : 0.0;
-        vals[3] = served ? 1.0 : 0.0;
 
-        Instance instance = new DenseInstance(1.0, vals);
-        instance.setDataset(or.trainingData);
+        //Oracle or = new Oracle();
+        // Create an instance for the current state
+
+        
+        
 
         // Predict the next step using the neural network
-        double[] prediction = or.neuralNetwork.distributionForInstance(instance);
-        int predictedClass = (int) Math.round(prediction[0]); // Assuming binary classification
+        //double[] prediction = or.neuralNetwork.distributionForInstance(instance);
+        //int predictedClass = (int) Math.round(prediction[0]); // Assuming binary classification
 
         // Convert predicted class to corresponding next step (e.g., "A" or "B")
-        String nextStep = or.trainingData.classAttribute().value(predictedClass);
+        //String nextStep = or.trainingData.classAttribute().value(predictedClass);
 
         // Compare predicted next step with the provided symbol and update state if it matches
+        /*
         if (nextStep.equals(s.toString())) {
             if (!breadHeated && s.equals(B)) {
                 breadHeated = true;
@@ -71,9 +62,6 @@ public class TestDriver {
         } else {
             return false; // Prediction does not match the provided symbol
         }
-    }
-
-    public void reset() {
-        breadHeated = butterSpread = jamAdded = served = false;
+            */
     }
 }

@@ -1,11 +1,21 @@
-breadHeated,butterSpread,jamAdded,served,nextStep
-false,false,false,false,B
-true,false,false,false,A
-true,true,false,false,A
-true,true,true,false,B
-false,false,false,false,A
-true,false,false,false,B
-true,true,false,false,B
-true,true,true,false,A
-true,true,true,true,A
-true,true,true,true,B
+a false
+b false
+bab true
+ab false
+abb false
+abab false
+baba false
+baab true
+baabaab true
+babbaaa false
+bb false
+aa false
+aaab false
+babbbab true
+bbbbbab true
+aabb false
+abba false
+bbaabba false
+bbaabb true
+babbbbbbb true
+
