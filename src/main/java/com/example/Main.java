@@ -47,10 +47,6 @@ public class Main
                 .withAlphabet(TestDriver.SIGMA)
                 .withOracle(om)
                 .create();
-
-
-
-
         //Cretae the experiment with the L* and the equivalence oracle
         Experiment.DFAExperiment<Character> ex = new Experiment.DFAExperiment<>( lstar,oe,TestDriver.SIGMA);
     
@@ -60,13 +56,11 @@ public class Main
         // Logging 
         ex.setLogModels(true);
 
-        //Run Experiment
+        // Run Experiment
         ex.run();
 
         // Results of the experiment
         DFA<?, Character> res = ex.getFinalHypothesis();
-
-
 
 
         System.out.println("***************************RESULTS***************************");
@@ -84,7 +78,7 @@ public class Main
 
         GraphDOT.write(res, TestDriver.SIGMA, System.out); 
 
-        Visualization.visualize(res, TestDriver.SIGMA);
+        //Visualization.visualize(res, TestDriver.SIGMA);
 
 
         System.out.println("****************************TESTS****************************");

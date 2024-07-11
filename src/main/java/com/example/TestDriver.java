@@ -2,16 +2,14 @@ package com.example;
 
 import net.automatalib.words.Alphabet;
 import net.automatalib.words.impl.GrowingMapAlphabet;
-import weka.classifiers.Evaluation;
 import weka.classifiers.functions.MultilayerPerceptron;
-import weka.classifiers.trees.J48;
+import weka.core.Attribute;
 import weka.core.DenseInstance;
-import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
+import java.util.ArrayList;
 
 public class TestDriver {
-    
 
     // input symbols
     private static final Character A = 'a';
@@ -25,43 +23,54 @@ public class TestDriver {
         SIGMA.add(B);
     }
 
-    public TestDriver() throws Exception {
-        
+    private MultilayerPerceptron nn;
+    private Instances dataStructure;
+
+    public TestDriver(String arffFile) throws Exception {
+        // Cargar los datos y entrenar el modelo
+        DataSource source = new DataSource(arffFile);
+        Instances data = source.getDataSet();
+        data.setClassIndex(data.numAttributes() - 1);
+
+        nn = new MultilayerPerceptron();
+        nn.buildClassifier(data);
+
+        // Crear estructura de datos para predicción de instancia única
+        ArrayList<Attribute> attributes = new ArrayList<>(data.numAttributes());
+        for (int i = 0; i < data.numAttributes() - 1; i++) {
+            ArrayList<String> values = new ArrayList<>(3);
+            values.add("a");
+            values.add("b");
+            values.add("_");
+            attributes.add(new Attribute("pos" + (i + 1), values));
+        }
+        ArrayList<String> classValues = new ArrayList<>(2);
+        classValues.add("true");
+        classValues.add("false");
+        attributes.add(new Attribute("class", classValues));
+
+        dataStructure = new Instances("TestInstances", attributes, 0);
+        dataStructure.setClassIndex(dataStructure.numAttributes() - 1);
     }
 
-    public boolean executeSymbol(Character s) throws Exception {
-
-        //Oracle or = new Oracle();
-        // Create an instance for the current state
-
-        
-        
-
-        // Predict the next step using the neural network
-        //double[] prediction = or.neuralNetwork.distributionForInstance(instance);
-        //int predictedClass = (int) Math.round(prediction[0]); // Assuming binary classification
-
-        // Convert predicted class to corresponding next step (e.g., "A" or "B")
-        //String nextStep = or.trainingData.classAttribute().value(predictedClass);
-
-        // Compare predicted next step with the provided symbol and update state if it matches
-        /*
-        if (nextStep.equals(s.toString())) {
-            if (!breadHeated && s.equals(B)) {
-                breadHeated = true;
-            } else if (breadHeated && !butterSpread && s.equals(A)) {
-                butterSpread = true;
-            } else if (breadHeated && butterSpread && !jamAdded && s.equals(A)) {
-                jamAdded = true;
-            } else if (breadHeated && butterSpread && jamAdded && !served && s.equals(B)) {
-                served = true;
-            } else {
-                return false; // Invalid state transition
+    public boolean executeSymbol(String cadena) {
+        try {
+            int maxLength = dataStructure.numAttributes() - 1; // -1 porque la última es la clase
+            DenseInstance instance = new DenseInstance(maxLength + 1); // +1 para la clase
+            for (int i = 0; i < maxLength; i++) {
+                if (i < cadena.length()) {
+                    instance.setValue(dataStructure.attribute("pos" + (i + 1)), String.valueOf(cadena.charAt(i)));
+                } else {
+                    instance.setValue(dataStructure.attribute("pos" + (i + 1)), "_");
+                }
             }
-            return true; // Valid state transition
-        } else {
-            return false; // Prediction does not match the provided symbol
+            instance.setDataset(dataStructure);
+
+            double prediction = nn.classifyInstance(instance);
+            return prediction == dataStructure.classAttribute().indexOfValue("true");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-            */
     }
 }
