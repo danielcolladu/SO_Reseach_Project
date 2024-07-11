@@ -17,13 +17,14 @@ public class Oracle implements MembershipOracle.DFAMembershipOracle<Character> {
 
     public Oracle() throws Exception {
         // 1º Calentar Pan
-        // -> Se pueden calentar muchos panes seguidos (b b b b ...)
+        // -> Para calentar el pan: Se utiliza una arista B para pasar al siguiente estado (Poner mantequilla), si se quiere calentar otro pan, utilizar la arista A 
         // 2º Poner Mantequilla 
-        // -> Para poner mantequilla debe haber al menos un pan (b -> a)
+        // -> Para poner mantequilla debe haber al menos un pan. Usar la arista A para pasar al siguiente estado (Poner Jamón). Si se desea un sandwich sin jamón usar la arista B
         // 3º Poner Jamón
-        // -> Debe haber antes un pan untado con mantequilla (ba .. a), y se puede poner extra (ba ..aaa)
-        // 3º Montar Sandwich
-        // -> Para que se pueda hacer el sandwich, debe haberse calentado un pan, puesto la mantequilla, y (opcional) poner jamón, pan entre medias (ba b, ba aaaa b)
+        // -> Debe haber antes un pan untado con mantequilla. Se utiliza la arista B para pasar al siguiente estado (Montar Sandwich), o se utiliza la arista A para poner más jamón
+        // 4º Montar Sandwich
+        // -> Para que se pueda hacer el sandwich (Es decir, para que la cadena esté aceptada),
+        // debe haberse calentado un pan (B), puesto la mantequilla (A), y poner o no Jamón o extra de Jamón 
         tD = new TestDriver("SO_Research_Project/src/main/java/com/example/training_data.arff");
     }
 

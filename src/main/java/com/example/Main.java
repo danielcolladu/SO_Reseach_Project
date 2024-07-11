@@ -38,7 +38,7 @@ public class Main
 
         //Se crea e inicializa el oraculo de equivalencia 'oe':
 
-        EquivalenceOracle.DFAEquivalenceOracle<Character> oe = new DFAWMethodEQOracle<>( om,4);
+        EquivalenceOracle.DFAEquivalenceOracle<Character> oe = new DFAWMethodEQOracle<>(om, 4);
         //  Por parametros: 'om' y la profundidad de busqueda
 
         //Se crea e inicializa el L* 'lstar'(se puede crear antes del oraculo de equivalencia)
@@ -78,7 +78,7 @@ public class Main
 
         GraphDOT.write(res, TestDriver.SIGMA, System.out); 
 
-        //Visualization.visualize(res, TestDriver.SIGMA);
+        Visualization.visualize(res, TestDriver.SIGMA);
 
 
         System.out.println("****************************TESTS****************************");
