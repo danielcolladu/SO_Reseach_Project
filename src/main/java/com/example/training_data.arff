@@ -1,4 +1,4 @@
-@relation oracle
+@relation moderate_oracle
 
 @attribute pos1 {a,b,_}
 @attribute pos2 {a,b,_}
@@ -10,33 +10,33 @@
 
 @data
 b, a, b, _, _, _, true
-b, a, a, a, b, _, true
+b, a, a, b, _, _, true
 b, b, _, _, _, _, false
 a, _, _, _, _, _, false
 b, b, b, _, _, _, false
 b, a, _, _, _, _, false
-b, a, a, b, _, _, true
+b, a, a, _, _, _, true
 a, a, b, _, _, _, false
 a, b, a, _, _, _, false
 a, b, b, _, _, _, true
 b, _, _, _, _, _, false
 a, b, _, _, _, _, false
-b, a, _, _, _, _,false
+b, a, _, _, _, _, false
 b, a, b, _, _, _, true
 b, a, a, b, _, _, true
 b, a, a, a, b, _, true
 a, a, _, _, _, _, false
 b, a, a, _, _, _, false
-b, b, b, b, _, _, false
+b, b, b, _, _, _, false
 a, a, a, _, _, _, false
-b, a, b, b, _, _, false
+b, a, b, _, _, _, true
 a, a, a, b, _, _, false
 b, b, a, b, _, _, true
 b, b, a, a, b, _, true
-a, b, a, a, a, b, true
-b, a, b, _, _, _, true
-a, b, b, a, _, _, false
-a, b, b, a, b, _, false
 a, b, a, b, _, _, true
-b, a, a, a, a, b, true
-b, b, b, b, b, _, false
+b, a, b, _, _, _, true
+a, b, b, _, _, _, false
+a, b, b, a, _, _, false
+a, b, a, b, _, _, true
+b, a, a, _, _, _, false
+b, b, b, _, _, _, false
